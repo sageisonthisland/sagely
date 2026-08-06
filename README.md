@@ -7,9 +7,10 @@ everything. I abandoned LaTeX years ago.
 
 Copy the contents of the repository to `~/texmf/tex/`.
 
-Most fonts should come with a standard TeXLive
-distribution. However, if you want CJK support
-you will need to install Noto Serif CJK Medium.
+You will need the following fonts installed:
+* Gentium
+* Linux Biolinum
+* Noto Serif CJK (defaults to simplified Chinese)
 
 ## Usage
 
