@@ -26,6 +26,8 @@
 
 \long\def\dont#1{}
 
+\def\resumepagenumbers{\footline{{\hfill\ss\folio\hfill}}}
+
 % The following is used for e.g., theorem numbers,
 % figure numbers, etc.. The subsubnumbox (say that
 % ten times fast) outputs
@@ -124,6 +126,8 @@
 
 % Sectioning
 \def\header#1{{\ss
+  % We keep this bad boy around for backwards-compatibility
+  % with my old college assignments.
   \line{\hfill#1}%
   \line{\hfill\the\day\ \fullmonthname\ \the\year}%
   \line{\hfill Sage Mitchell}}%
@@ -131,7 +135,9 @@
 
 \def\title#1{%
   \vskip\parskip
-  \centerline{\titlefont\relax#1}
+  \centerline{\titlefont\relax#1}%
+  \sectnum=0%
+  \subsectnum=0%
 }
 
 \def\subtitle#1{%
@@ -140,10 +146,21 @@
   \vskip.25em
 }
 
+\newcount\chaptnum
 \newcount\sectnum
 \newcount\subsectnum
+\chaptnum=0
 \sectnum=0
 \subsectnum=0
+
+\def\nonumchapter#1{%
+  \sectnum=0%
+  \subsectnum=0%
+  \fignum=0%
+  \newpage
+  \centerline{\chapterfont\relax#1}%
+  \vskip4em%
+}
 
 \def\nonumsection#1{%
   \subsectnum=0%
@@ -159,7 +176,17 @@
   \fignum=0%
   \vskip\parskip
   \vskip\parskip
-  \line{\subtitlefont\relax#1\hfill}%
+  \line{\subsectionfont\relax#1\hfill}%
+}
+
+\def\chapterword{Chapter}
+\def\chapter#1{%
+  \sectnum=0%
+  \subsectnum=0%
+  \advance\chaptnum by 1%
+  \definexref{#1}{\the\chaptnum}{chapter}%
+  \writenumberedtocentry{chapter}{#1}{\the\chaptnum}%
+  \nonumchapter{Chapter \the\chaptnum: #1}%
 }
 
 \def\sectionword{Section}
@@ -167,8 +194,8 @@
   \subsectnum=0%
   \advance\sectnum by 1%
   \definexref{#1}{\the\sectnum}{section}%
-  \writenumberedtocentry{section}{#1}{\the\sectnum}
-  \nonumsection{\the\sectnum. #1}
+  \writenumberedtocentry{section}{#1}{\the\sectnum}%
+  \nonumsection{\hbox to 28pt{§\the\sectnum\hfil}#1}%
 }
 
 \def\subsectionword{Section}
@@ -176,14 +203,15 @@
   \advance\subsectnum by 1%
   \definexref{#1}{\the\sectnum.\the\subsectnum}{subsection}%
   \writenumberedtocentry{subsection}{#1}{\the\subsectnum}%
-  \nonumsubsection{\the\sectnum.\the\subsectnum. #1}%
+  \nonumsubsection{\hbox to 28pt{\subsectionnumbersfont\the\sectnum.\thinspace\the\subsectnum\hfil}#1}%
 }
 
 \def\newpage{\relax\vfill\eject}
 
 % Table of Contents
-\def\tocsectionentry#1#2#3{\line{#2. #1\dotfill#3}\vskip.5em}
-\def\tocsubsectionentry#1#2#3{\line{\hskip2em#2. #1\dotfill#3}\vskip.5em}
+\def\tocchapterentry#1#2#3{\line{{\tenssbf Chapter #2: #1}\dotfill#3}\vskip.5em}
+\def\tocsectionentry#1#2#3{\line{§#2\hskip 1em #1\dotfill#3}\vskip.5em}
+\def\tocsubsectionentry#1#2#3{\line{\hskip2em\relax#2.\hskip.5em{\it\relax#1}\dotfill#3}\vskip.5em}
 
 % Bibliography
 %\bibliographystyle{plain}
