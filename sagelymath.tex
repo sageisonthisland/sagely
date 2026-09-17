@@ -67,6 +67,13 @@
 \int_{#1}^{#2} #3 \,\diff #4%
 }
 
+% Actuarial
+\def\ang#1{\vbox{\hrule\hbox{\vbox{\vskip.8pt\hbox{$_{#1}$}}\vrule}}}
+\def\dmod{D_{\hbox{mod}}}
+\def\dmac{D_{\hbox{mac}}}
+\def\cmod{C_{\hbox{mod}}}
+\def\cmac{C_{\hbox{mac}}}
+
 
 % % Sectioning
 
@@ -128,6 +135,14 @@
 \long\def\remark#1{{\inset{Remark.\hskip1em}{\relax#1}\endinset}}
 \long\def\proof#1\endproof{{\insetleftskip=4em\inset{\hbox to \insetleftskip{Proof.\hfill}}#1\qed\endinset}}
 
+
+\long\def\beginproblems#1\endproblems{%
+  \begingroup
+    \sectnum=0%
+    \subsectnum=0%
+    #1
+  \endgroup
+}
 
 % And for their numbered variants.  We count definitions,
 % propositions, theorems, examples, and lemmas all using the same

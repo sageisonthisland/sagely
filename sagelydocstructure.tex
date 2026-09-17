@@ -8,7 +8,6 @@
 
 % Dimensions
 \nopagenumbers
-\footline{{\hfill\ss\folio\hfill}}
 \hsize 5in
 \hoffset 0.75in
 \vsize 8.5in
@@ -26,7 +25,8 @@
 
 \long\def\dont#1{}
 
-\def\resumepagenumbers{\footline{{\hfill\ss\folio\hfill}}}
+\def\resumepagenumbers{\footline{\vbox{\vskip1.5em\hbox to \hsize{\hfill{$\langle$\lower.05pt\hbox{\pagenofont\folio}$\rangle$}\hfill}}}}
+\resumepagenumbers
 
 % The following is used for e.g., theorem numbers,
 % figure numbers, etc.. The subsubnumbox (say that
@@ -203,7 +203,7 @@
   \advance\subsectnum by 1%
   \definexref{#1}{\the\sectnum.\the\subsectnum}{subsection}%
   \writenumberedtocentry{subsection}{#1}{\the\subsectnum}%
-  \nonumsubsection{\hbox to 28pt{\subsectionnumbersfont\the\sectnum.\thinspace\the\subsectnum\hfil}#1}%
+  \nonumsubsection{\hbox to 28pt{\subsectionnumbersfont\the\sectnum.\the\subsectnum\hfil}#1}%
 }
 
 \def\newpage{\relax\vfill\eject}
